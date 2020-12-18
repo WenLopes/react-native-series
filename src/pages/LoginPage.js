@@ -3,8 +3,13 @@ import { View, StyleSheet, ActivityIndicator, Text, Alert } from 'react-native'
 import { ThemeProvider, Input, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from 'firebase';
+import { tryLogin } from './../store/actions'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function LoginPage(props) {
+
+    const dispatch = useDispatch();
+    // const user = useSelector(state => state.userReducer);
 
     const [login, setLogin] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -29,62 +34,11 @@ export default function LoginPage(props) {
 
     }, [])
 
-    const tryLogin = () => {
-
-        const loginUserSuccess = user => {
-            setMessage('Sucesso ao criar usuário');
-        }
-
-        const loginUserFailed = error => {
-            setMessage('Erro ao criar usuário: '+error) 
-        }
-
+    const makeLogin = () => {
         setIsLoading(true);
         setMessage('');
-
-        firebase
-            .auth()
-            // .signInWithEmailAndPassword('testefirebase@mail.com.br', '123123')
-            .signInWithEmailAndPassword(login, password)
-            .then((response) => {
-                loginUserSuccess()
-            })
-            .catch( error => { 
-
-                if(error.code === 'auth/user-not-found'){
-                    Alert.alert(
-                        'Usuário não encontrado',
-                        'Deseja criar um cadastro com os dados inseridos?',
-                        [
-                            {
-                                text: 'Não',
-                                onPress: () => {},
-                                style: 'cancel'
-                            },
-                            {
-                                text: 'Sim',
-                                onPress: () => {
-                                    firebase
-                                        .auth()
-                                        .createUserWithEmailAndPassword(login, password)
-                                        .then( () => {
-                                            loginUserSuccess()
-                                        })
-                                        .catch(error => {
-                                            loginUserFailed(error)
-                                        })
-                                }
-                            }
-                        ],
-                        { cancelable: false }
-                    )
-
-                    return;
-                }
-
-                loginUserFailed(error)
-            })
-            .then( () => setIsLoading(false) )     
+        dispatch( tryLogin( login, password ) );
+        setIsLoading(false);
     }
 
     const renderButton = () => {
@@ -100,7 +54,7 @@ export default function LoginPage(props) {
                         />
                     }
                     title=" Entrar"
-                    onPress={ () => { tryLogin() }}
+                    onPress={ () => { makeLogin() }}
                 />
             );
         }
