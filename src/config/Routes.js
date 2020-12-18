@@ -1,5 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
 import LoginPage from '../pages/LoginPage'
 import SeriesPage from '../pages/SeriesPage'
@@ -9,24 +10,26 @@ export default function Routes() {
     const Stack = createStackNavigator();
 
     return (
-        <Stack.Navigator 
-            initialRouteName="Login"
-            screenOptions={navigation.defaultOptions}                    
-        >
+        <NavigationContainer>
+            <Stack.Navigator 
+                initialRouteName="Login"
+                screenOptions={navigation.defaultOptions}                    
+            >
 
-            <Stack.Screen
-                name="LoginPage"
-                component={LoginPage}
-                options={navigation.login}
-            />
+                <Stack.Screen
+                    name="LoginPage"
+                    component={LoginPage}
+                    options={navigation.login}
+                />
 
-            <Stack.Screen
-                name="SeriesPage"
-                component={SeriesPage}
-                options={navigation.series}
-            />
+                <Stack.Screen
+                    name="SeriesPage"
+                    component={SeriesPage}
+                    options={navigation.series}
+                />
 
-        </Stack.Navigator>
+            </Stack.Navigator>
+        </NavigationContainer>
     )
 }
 
