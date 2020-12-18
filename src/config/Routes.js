@@ -1,7 +1,8 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 
-import LoginScreen from '../pages/LoginScreen'
+import LoginPage from '../pages/LoginPage'
+import SeriesPage from '../pages/SeriesPage'
 
 export default function Routes() {
 
@@ -14,9 +15,15 @@ export default function Routes() {
         >
 
             <Stack.Screen
-                name="LoginScreen"
-                component={LoginScreen}
+                name="LoginPage"
+                component={LoginPage}
                 options={navigation.login}
+            />
+
+            <Stack.Screen
+                name="SeriesPage"
+                component={SeriesPage}
+                options={navigation.series}
             />
 
         </Stack.Navigator>
@@ -42,6 +49,10 @@ const navigation = {
 
     login: {
         title: 'Login'
+    },
+
+    series: {
+        title: 'Séries'
     }
 
 }

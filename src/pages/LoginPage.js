@@ -4,7 +4,7 @@ import { ThemeProvider, Input, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from 'firebase';
 
-export default function LoginScreen(props) {
+export default function LoginPage(props) {
 
     const [login, setLogin] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -12,6 +12,7 @@ export default function LoginScreen(props) {
     const [message, setMessage] = React.useState('');
 
     React.useEffect(()=> {
+
         const firebaseConfig = {
             apiKey: "AIzaSyAtkgMgQjhDfpyEhsO04yxvlvFRwrj9uqE",
             authDomain: "series-b95c0.firebaseapp.com",
@@ -30,6 +31,14 @@ export default function LoginScreen(props) {
 
     const tryLogin = () => {
 
+        const loginUserSuccess = user => {
+            setMessage('Sucesso ao criar usuário');
+        }
+
+        const loginUserFailed = error => {
+            setMessage('Erro ao criar usuário: '+error) 
+        }
+
         setIsLoading(true);
         setMessage('');
 
@@ -38,7 +47,7 @@ export default function LoginScreen(props) {
             // .signInWithEmailAndPassword('testefirebase@mail.com.br', '123123')
             .signInWithEmailAndPassword(login, password)
             .then((response) => {
-                setMessage('Sucesso ao autenticar');
+                loginUserSuccess()
             })
             .catch( error => { 
 
@@ -59,10 +68,10 @@ export default function LoginScreen(props) {
                                         .auth()
                                         .createUserWithEmailAndPassword(login, password)
                                         .then( () => {
-                                            setMessage('Sucesso ao criar usuário');
+                                            loginUserSuccess()
                                         })
                                         .catch(error => {
-                                            setMessage('Erro ao criar usuário: '+error) 
+                                            loginUserFailed(error)
                                         })
                                 }
                             }
@@ -73,7 +82,7 @@ export default function LoginScreen(props) {
                     return;
                 }
 
-                setMessage('Erro ao autenticar: '+error) 
+                loginUserFailed(error)
             })
             .then( () => setIsLoading(false) )     
     }
