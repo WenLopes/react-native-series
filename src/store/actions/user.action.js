@@ -3,7 +3,7 @@ import firebase from 'firebase';
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
 export const USER_LOGOUT = 'USER_LOGOUT'
 
-const userLoginSuccess = payload => {
+export const userLoginSuccess = payload => {
  
     return {
         type: USER_LOGIN_SUCCESS,
@@ -15,18 +15,13 @@ const userLogout = () => ({
     type: USER_LOGOUT
 })
 
-export const tryLogin = (login, password) => dispatch => {
+export const tryLogin = (login, password) => {
 
-    firebase
+    return firebase
         .auth()
-        // .signInWithEmailAndPassword('testefirebase@mail.com.br', '123123')
         .signInWithEmailAndPassword(login, password)
         .then(user => {
-            console.log(user);
-            dispatch(userLoginSuccess(user))
-        })
-        .catch(error => {
-            console.log('Algo deu errado: '+error)
+            return user;
         })
         // .catch( error => { 
 

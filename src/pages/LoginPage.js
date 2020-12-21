@@ -3,13 +3,14 @@ import { View, StyleSheet, ActivityIndicator, Text, Alert } from 'react-native'
 import { ThemeProvider, Input, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from 'firebase';
-import { tryLogin } from './../store/actions'
+import { tryLogin, userLoginSuccess } from './../store/actions'
 import { useDispatch, useSelector } from 'react-redux'
+import userReducer from '../store/reducers/user.reducer';
 
 export default function LoginPage(props) {
 
     const dispatch = useDispatch();
-    // const user = useSelector(state => state.userReducer);
+    const user = useSelector(state => state.userReducer);
 
     const [login, setLogin] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -35,10 +36,26 @@ export default function LoginPage(props) {
     }, [])
 
     const makeLogin = () => {
+
         setIsLoading(true);
         setMessage('');
-        dispatch( tryLogin( login, password ) );
-        setIsLoading(false);
+
+        tryLogin( login, password )
+            .then( (user) => {
+
+                dispatch( userLoginSuccess(user) );
+                props.navigation.replace('SeriesPage');
+
+            })
+            .catch(error => {
+
+                setIsLoading(false);
+                console.log('Algo deu errado: '+error)
+            })
+    }
+
+    const showUserReducer = () => {
+        console.log(user);
     }
 
     const renderButton = () => {
@@ -93,6 +110,11 @@ export default function LoginPage(props) {
                 { renderButton() }
 
                 { renderMessage() }
+
+                <Button
+                    title="Exibir user"
+                    onPress={ () => { showUserReducer() }}
+                />
 
             </View>
         </ThemeProvider>
