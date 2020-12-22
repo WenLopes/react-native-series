@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, ActivityIndicator, Text, Alert } from 'react-native'
+import { View, StyleSheet, ActivityIndicator, Text } from 'react-native'
 import { ThemeProvider, Input, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from 'firebase';
@@ -43,19 +43,21 @@ export default function LoginPage(props) {
         tryLogin( login, password )
             .then( (user) => {
 
-                dispatch( userLoginSuccess(user) );
-                props.navigation.replace('SeriesPage');
+                if(user){
+                    dispatch( userLoginSuccess(user) );
+                    return props.navigation.replace('SeriesPage');
+                }
+
+                setIsLoading(false);
+                setMessage('');
 
             })
             .catch(error => {
 
                 setIsLoading(false);
-                console.log('Algo deu errado: '+error)
-            })
-    }
+                setMessage('Algo deu errado: '+error.code);
 
-    const showUserReducer = () => {
-        console.log(user);
+            })
     }
 
     const renderButton = () => {
@@ -98,6 +100,8 @@ export default function LoginPage(props) {
                     placeholder='Login' 
                     value={login}
                     onChangeText={ value => setLogin(value) } 
+                    keyboardType="email-address"
+                    autoCapitalize='none'
                 />
  
                 <Input 
@@ -110,11 +114,6 @@ export default function LoginPage(props) {
                 { renderButton() }
 
                 { renderMessage() }
-
-                <Button
-                    title="Exibir user"
-                    onPress={ () => { showUserReducer() }}
-                />
 
             </View>
         </ThemeProvider>

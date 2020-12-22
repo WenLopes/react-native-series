@@ -7,7 +7,6 @@ export default (state = initialState, { type, payload }) => {
     switch (type) {
 
         case USER_LOGIN_SUCCESS:
-            console.log('Estou no user_login_success', payload)
             return { ...state, ...payload }
 
         case USER_LOGOUT:
