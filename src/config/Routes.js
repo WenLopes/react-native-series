@@ -12,7 +12,7 @@ export default function Routes() {
     return (
         <NavigationContainer>
             <Stack.Navigator 
-                initialRouteName="Login"
+                initialRouteName="SeriesPage"
                 screenOptions={navigation.defaultOptions}                    
             >
 

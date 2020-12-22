@@ -1,11 +1,26 @@
 import React from 'react'
-import { Text } from 'react-native'
-
+import { StyleSheet, FlatList, View } from 'react-native'
+import series from '../../series.json';
+import SerieCard from '../components/SerieCard'
 
 export default function SeriesPage() {
     return (
         <>
-          <Text> Series page </Text>
+          <FlatList 
+            data={series}
+            keyExtractor={item => item.id}
+            numColumns='2'
+            ListHeaderComponent={ () => ( <View style={styles.marginTop} /> )}
+            ListFooterComponent={ () => ( <View style={styles.marginBottom} /> )}
+            renderItem={ ({item}) => (
+              <SerieCard serie={item} />
+            )}
+          />
         </>
     )
 }
+
+const styles = StyleSheet.create({
+  marginTop: { marginTop: 10 },
+  marginBottom: { marginBottom: 10 }
+})
