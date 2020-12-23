@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginPage from '../pages/LoginPage'
 import SeriesPage from '../pages/SeriesPage'
 import SerieDetailPage from '../pages/SerieDetailPage'
+import SerieFormPage from '../pages/SerieFormPage'
 
 export default function Routes() {
 
@@ -13,26 +14,32 @@ export default function Routes() {
     return (
         <NavigationContainer>
             <Stack.Navigator 
-                initialRouteName="SeriesPage"
+                initialRouteName="SerieFormPage"
                 screenOptions={navigation.defaultOptions}                    
             >
 
                 <Stack.Screen
                     name="LoginPage"
                     component={LoginPage}
-                    options={navigation.login}
+                    options={navigation.loginPage}
                 />
 
                 <Stack.Screen
                     name="SeriesPage"
                     component={SeriesPage}
-                    options={navigation.series}
+                    options={navigation.seriesPage}
                 />
 
                 <Stack.Screen
                     name="SerieDetailPage"
                     component={SerieDetailPage}
                     options={({route}) => ({title: route.params.serie.title, ...navigation.serieDetailPage})}
+                />
+
+                <Stack.Screen
+                    name="SerieFormPage"
+                    component={SerieFormPage}
+                    options={navigation.serieFormPage}
                 />
 
             </Stack.Navigator>
@@ -57,13 +64,17 @@ const navigation = {
         }
     },
 
-    login: {
+    loginPage: {
         title: 'Login'
     },
 
-    series: {
+    seriesPage: {
         title: 'Séries'
     },
 
-    serieDetailPage: {}
+    serieDetailPage: {},
+
+    serieFormPage: {
+        title:  'Nova série'
+    },
 }
