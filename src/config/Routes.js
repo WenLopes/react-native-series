@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import LoginPage from '../pages/LoginPage'
 import SeriesPage from '../pages/SeriesPage'
+import SerieDetailPage from '../pages/SerieDetailPage'
 
 export default function Routes() {
 
@@ -26,6 +27,12 @@ export default function Routes() {
                     name="SeriesPage"
                     component={SeriesPage}
                     options={navigation.series}
+                />
+
+                <Stack.Screen
+                    name="SerieDetailPage"
+                    component={SerieDetailPage}
+                    options={({route}) => ({title: route.params.serie.title, ...navigation.serieDetailPage})}
                 />
 
             </Stack.Navigator>
@@ -56,6 +63,7 @@ const navigation = {
 
     series: {
         title: 'Séries'
-    }
+    },
 
+    serieDetailPage: {}
 }

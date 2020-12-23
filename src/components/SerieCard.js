@@ -1,28 +1,13 @@
 import React from 'react'
-import { View, Text, StyleSheet, Dimensions, Image, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, Image, SafeAreaView, TouchableOpacity } from 'react-native'
 import { Card, Button, Icon } from 'react-native-elements'
 
-export default function SerieCard({serie}) {
+export default function SerieCard({serie, onNavigate}) {
     return (
-        
-        // <Card containerStyle={styles.container}>
-        //     <Card.Title>{serie.title}</Card.Title>
-        //     <Card.Image 
-        //         source={{ 
-        //             uri: serie.img,
-        //             aspectRatio: 1,
-        //             resizeMode: 'cover'
-        //         }}
-        //     >
-        //         <Button
-        //             icon={<Icon name='code' color='#ffffff' />}
-        //             buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-        //             title='INFO' 
-        //         />
-        //     </Card.Image>
-        // </Card>
-
-        <SafeAreaView style={styles.container}>
+        <TouchableOpacity 
+            style={styles.container}
+            onPress={ () => onNavigate(serie) }
+        >
             <SafeAreaView style={styles.card}>
 
                 <Image
@@ -38,7 +23,7 @@ export default function SerieCard({serie}) {
                 </SafeAreaView>
 
             </SafeAreaView>
-        </SafeAreaView>
+        </TouchableOpacity>
     )
 }
 

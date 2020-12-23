@@ -3,7 +3,7 @@ import { StyleSheet, FlatList, View } from 'react-native'
 import series from '../../series.json';
 import SerieCard from '../components/SerieCard'
 
-export default function SeriesPage() {
+export default function SeriesPage(props) {
     return (
         <>
           <FlatList 
@@ -13,7 +13,10 @@ export default function SeriesPage() {
             ListHeaderComponent={ () => ( <View style={styles.marginTop} /> )}
             ListFooterComponent={ () => ( <View style={styles.marginBottom} /> )}
             renderItem={ ({item}) => (
-              <SerieCard serie={item} />
+              <SerieCard 
+                serie={item}
+                onNavigate={ serie => props.navigation.navigate('SerieDetailPage', {serie} ) } 
+              />
             )}
           />
         </>
