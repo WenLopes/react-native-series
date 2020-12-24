@@ -2,7 +2,7 @@ import { SET_FIELD } from '../actions/index'
 
 const initialState =     {
     title: '',
-    gender: '',
+    gender: 'drama',
     rate: 0,
     img: '',
     description: ''
@@ -16,7 +16,10 @@ export default (state = initialState, { type, payload }) => {
         newState[payload.field] = payload.value;
         return {...state, ...newState};
 
+    case SET_FIELD:
+        return {...state, ...payload};
+
     default:
-        return state
+        return state;
     }
 }

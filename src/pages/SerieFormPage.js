@@ -1,9 +1,9 @@
 import React from 'react'
 import { ScrollView, View, StyleSheet, Text, KeyboardAvoidingView } from 'react-native'
 import { ThemeProvider, Input, Slider, Icon, Button } from 'react-native-elements'
-import { setField } from '../store/actions/index';
 import { useSelector ,useDispatch } from 'react-redux'
 import { Picker } from '@react-native-picker/picker';
+import { setField, saveSerie } from '../store/actions/index';
 
 export default function SerieFormPage() {
 
@@ -95,7 +95,7 @@ export default function SerieFormPage() {
                                 />
                             }
                             title=" Salvar"
-                            onPress={ () => console.log(serieForm) }
+                            onPress={ () => dispatch( saveSerie(serieForm) ) }
                         />
 
                     </View>

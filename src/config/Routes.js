@@ -14,7 +14,7 @@ export default function Routes() {
     return (
         <NavigationContainer>
             <Stack.Navigator 
-                initialRouteName="SerieFormPage"
+                initialRouteName="LoginPage"
                 screenOptions={navigation.defaultOptions}                    
             >
 
