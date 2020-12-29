@@ -1,14 +1,16 @@
 import React from 'react'
 import { ScrollView, View, StyleSheet, Text, KeyboardAvoidingView } from 'react-native'
 import { ThemeProvider, Input, Slider, Icon, Button } from 'react-native-elements'
-import { useSelector ,useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { Picker } from '@react-native-picker/picker';
 import { setField, saveSerie } from '../store/actions/index';
 
-export default function SerieFormPage() {
-
-    const dispatch = useDispatch();
-    const serieForm = useSelector( state => state.serieFormReducer );
+const SerieFormPage = ({ 
+    serieForm, 
+    setField, 
+    saveSerie, 
+    navigation 
+}) => {
 
     const genderOptions = [
         {label: 'Ação', value: 'Ação'},
@@ -27,20 +29,20 @@ export default function SerieFormPage() {
                             placeholder='Título'
                             style={styles.input}
                             value={serieForm.title}
-                            onChangeText={ value => dispatch( setField('title', value) ) } 
+                            onChangeText={ value => setField('title', value) } 
                         />
 
                         <Input 
                             placeholder='Link da imagem'
                             style={styles.input}
                             value={serieForm.img}
-                            onChangeText={ value => dispatch( setField('img', value) ) } 
+                            onChangeText={ value => setField('img', value) } 
                         />
 
                         <Picker
                             selectedValue={serieForm.gender}
                             style={styles.dropDown_Container}
-                            onValueChange={ itemValue => dispatch( setField('gender', itemValue) ) }
+                            onValueChange={ itemValue => setField('gender', itemValue) }
                         >
                             {
                                 genderOptions.map( (item) => {
@@ -69,7 +71,7 @@ export default function SerieFormPage() {
                                 ),
                                 }}
                                 value={serieForm.rate}
-                                onValueChange={value => dispatch( setField('rate', value) )}
+                                onValueChange={value => setField('rate', value)}
                             />
                             <View style={{ justifyContent: 'center',alignItems: 'center' }}>
                                 <Text style={{fontSize:17, fontWeight: 'bold'}}>Nota: {serieForm.rate}</Text>
@@ -82,7 +84,7 @@ export default function SerieFormPage() {
                             placeholder='Descrição'
                             style={styles.input}
                             value={serieForm.description}
-                            onChangeText={ value => dispatch( setField('description', value) ) } 
+                            onChangeText={ value => setField('description', value) } 
                         />
 
                         <Button
@@ -95,7 +97,10 @@ export default function SerieFormPage() {
                                 />
                             }
                             title=" Salvar"
-                            onPress={ () => dispatch( saveSerie(serieForm) ) }
+                            onPress={ () => {
+                                saveSerie(serieForm)
+                                    .then(() => navigation.goBack())
+                            }}
                         />
 
                     </View>
@@ -128,3 +133,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
+
+function mapStateToProps(state){
+    return {
+        serieForm: state.serieFormReducer
+    }
+}
+
+const mapDispatchToProps = {
+    setField,
+    saveSerie
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SerieFormPage);
