@@ -1,4 +1,4 @@
-import { SET_FIELD } from '../actions/index'
+import { SET_FIELD, SERIE_SAVED_SUCCESS } from '../actions/index'
 
 const initialState =     {
     title: '',
@@ -15,6 +15,9 @@ export default (state = initialState, { type, payload }) => {
         const newState = {...state};
         newState[payload.field] = payload.value;
         return {...state, ...newState};
+
+    case SERIE_SAVED_SUCCESS:
+        return {...state, ...initialState};
 
     case SET_FIELD:
         return {...state, ...payload};

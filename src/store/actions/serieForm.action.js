@@ -6,23 +6,38 @@ export const setField = (field, value) => ({
     payload: { field, value}
 })
 
+export const SERIE_SAVED_SUCCESS = 'SERIE_SAVED_SUCCESS';
+export const serieSavedSuccess = () => ({
+    type: SERIE_SAVED_SUCCESS
+})
+
 export const STORE_SERIE = 'STORE_SERIE';
-export const saveSerie = serie => (dispatch, getState) => {
-
-    const state = getState();
-    const { uid } = state.userReducer.user;
-    console.log(uid);
-
-    firebase
-        .database()
-        .ref(`/users/${uid}/series`)
-        .push(serie)
-        .then((res)=>{
-            console.log(res);
-        })
-
-    return {
-        type: STORE_SERIE,
-        serie
+export const saveSerie = serie => {  
+    return async (dispatch, getState) => {
+        const state = getState();
+        const { uid } = state.userReducer.user;
+        return await firebase
+                .database()
+                .ref(`/users/${uid}/series`)
+                .push(serie)
+                .then(() => dispatch( serieSavedSuccess() ))
     }
 }
+
+/** Código da aula que funciona */
+// export const saveSerie = serie => {  
+
+//     const {currentUser} = firebase.auth();
+//     return async dispatch => {
+//         try{
+//             const {uid} = currentUser;
+//             return await firebase
+//                     .database()
+//                     .ref(`/users/${uid}/series`)
+//                     .push(serie)
+
+//         } catch(error){
+//             console.log('entrei no error: '+error);
+//         }
+//     }
+// }

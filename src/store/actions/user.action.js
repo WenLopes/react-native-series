@@ -57,3 +57,23 @@ export const tryLogin = (login, password) => {
             return new Promise.reject(error);
         });
 }
+
+/** Exemplo de Async Await com Axios */
+// export default function createUser(params) {  
+//     return async dispatch => {
+//       function onSuccess(success) {
+//         dispatch({ type: CREATE_USER, payload: success });
+//         return success;
+//       }
+//       function onError(error) {
+//         dispatch({ type: ERROR_GENERATED, error });
+//         return error;
+//       }
+//       try {
+//         const success = await axios.post('http://www', params);
+//         return onSuccess(success);
+//       } catch (error) {
+//         return onError(error);
+//       }
+//     }
+//   }
