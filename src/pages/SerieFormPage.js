@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, StyleSheet, Text, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, View, StyleSheet, Text, KeyboardAvoidingView, ActivityIndicator, Alert } from 'react-native'
 import { ThemeProvider, Input, Slider, Icon, Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { Picker } from '@react-native-picker/picker';
@@ -18,6 +18,46 @@ const SerieFormPage = ({
         {label: 'Suspense', value: 'suspense'},
         {label: 'Terror', value: 'terror'},
     ]
+
+    const [isSaving, setIsSaving] = React.useState(false);
+
+    const executeSaveSerie = async () => {
+        setIsSaving(true);
+
+        try{
+            await saveSerie(serieForm);
+        } catch(e){
+            Alert.alert('Erro!', 'Um erro ocorreu: ' + e.message);
+        } finally {
+            setIsSaving(false);
+        }
+
+        navigation.goBack();
+    }
+
+    const renderButton = () => {
+
+        if(isSaving){
+            return (
+                <ActivityIndicator size="large" color="#6ca2f7" />
+            );
+        }
+
+        return (
+            <Button
+                style={{width: '100%'}}
+                icon={
+                    <Icon
+                        name="arrow-right"
+                        size={15}
+                        color="white"
+                    />
+                }
+                title=" Salvar"
+                onPress={ () => executeSaveSerie() }
+            />
+        )
+    }
 
     return (
         <KeyboardAvoidingView style={{ flex: 1}} behavior="height" keyboardVerticalOffset={100} enabled>
@@ -87,21 +127,7 @@ const SerieFormPage = ({
                             onChangeText={ value => setField('description', value) } 
                         />
 
-                        <Button
-                            style={{width: '100%'}}
-                            icon={
-                                <Icon
-                                    name="arrow-right"
-                                    size={15}
-                                    color="white"
-                                />
-                            }
-                            title=" Salvar"
-                            onPress={ () => {
-                                saveSerie(serieForm)
-                                    .then(() => navigation.goBack())
-                            }}
-                        />
+                        { renderButton() }
 
                     </View>
                 </ScrollView>

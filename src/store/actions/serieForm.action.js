@@ -16,28 +16,11 @@ export const saveSerie = serie => {
     return async (dispatch, getState) => {
         const state = getState();
         const { uid } = state.userReducer.user;
-        return await firebase
-                .database()
-                .ref(`/users/${uid}/series`)
-                .push(serie)
-                .then(() => dispatch( serieSavedSuccess() ))
+        await firebase
+            .database()
+            .ref(`/users/${uid}/series`)
+            .push(serie)
+
+        dispatch( serieSavedSuccess() );
     }
 }
-
-/** Código da aula que funciona */
-// export const saveSerie = serie => {  
-
-//     const {currentUser} = firebase.auth();
-//     return async dispatch => {
-//         try{
-//             const {uid} = currentUser;
-//             return await firebase
-//                     .database()
-//                     .ref(`/users/${uid}/series`)
-//                     .push(serie)
-
-//         } catch(error){
-//             console.log('entrei no error: '+error);
-//         }
-//     }
-// }
