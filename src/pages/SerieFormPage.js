@@ -3,13 +3,16 @@ import { ScrollView, View, StyleSheet, Text, KeyboardAvoidingView, ActivityIndic
 import { ThemeProvider, Input, Slider, Icon, Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { Picker } from '@react-native-picker/picker';
-import { setField, saveSerie } from '../store/actions/index';
+import { setField, saveSerie, setWholeSerie, resetForm } from '../store/actions/index';
 
 const SerieFormPage = ({ 
     serieForm, 
     setField, 
+    setWholeSerie,
+    resetForm,
     saveSerie, 
-    navigation 
+    navigation,
+    route
 }) => {
 
     const genderOptions = [
@@ -58,6 +61,17 @@ const SerieFormPage = ({
             />
         )
     }
+
+    React.useEffect(() => {
+
+        const {params} = route;
+        if(params && params.serieToEdit){
+            setWholeSerie(params.serieToEdit);
+            return;          
+        }
+        resetForm();
+
+    }, []);
 
     return (
         <KeyboardAvoidingView style={{ flex: 1}} behavior="height" keyboardVerticalOffset={100} enabled>
@@ -168,7 +182,9 @@ function mapStateToProps(state){
 
 const mapDispatchToProps = {
     setField,
-    saveSerie
+    saveSerie,
+    setWholeSerie,
+    resetForm
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SerieFormPage);

@@ -6,9 +6,20 @@ export const setField = (field, value) => ({
     payload: { field, value}
 })
 
+export const SET_WHOLE_SERIE = 'SET_WHOLE_SERIE';
+export const setWholeSerie = payload => ({
+    type: SET_WHOLE_SERIE,
+    payload
+})
+
 export const SERIE_SAVED_SUCCESS = 'SERIE_SAVED_SUCCESS';
 export const serieSavedSuccess = () => ({
     type: SERIE_SAVED_SUCCESS
+})
+
+export const RESET_FORM = 'RESET_FORM';
+export const resetForm = () => ({
+    type: RESET_FORM
 })
 
 export const STORE_SERIE = 'STORE_SERIE';

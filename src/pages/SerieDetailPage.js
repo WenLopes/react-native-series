@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, SafeAreaView, ScrollView, Image, View,  } from 'react-native'
 import Line from '../components/Line'
 import LongLine from '../components/LongLine'
+import { Button } from 'react-native-elements'
 
 
 export default function SerieDetailPage(props) {
@@ -25,6 +26,11 @@ export default function SerieDetailPage(props) {
                     <LongLine label="Sinopse:" content={ serie.description } />
 
                 </View>
+
+                <Button
+                    title="Editar"
+                    onPress={ () => { props.navigation.replace('SerieFormPage',{ serieToEdit: serie}) } }
+                />
 
             </ScrollView>
         </View>
