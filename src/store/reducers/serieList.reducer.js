@@ -1,6 +1,6 @@
 import { SET_SERIES } from '../actions'
 
-const initialState = {};
+const initialState = null;
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {

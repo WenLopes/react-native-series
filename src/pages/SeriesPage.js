@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, FlatList, View, Text } from 'react-native'
+import { StyleSheet, FlatList, View, ActivityIndicator } from 'react-native'
 import SerieCard from '../components/SerieCard';
 import AddSerieCard from '../components/AddSerieCard';
 import { useSelector, useDispatch } from 'react-redux'
@@ -10,6 +10,9 @@ export default function SeriesPage(props) {
     const dispatch = useDispatch();
     const serieListReducer = useSelector( (state) => { 
         const series = state.serieListReducer;
+        if(series === null){
+          return series;
+        }
         const keys = Object.keys(series);
         return keys.map(id => {
           return {...series[id], id}
@@ -39,14 +42,18 @@ export default function SeriesPage(props) {
 
     return (
         <>
-          <FlatList 
-            data={[...serieListReducer, { isLast: true }]}
-            keyExtractor={item => item.id}
-            numColumns='2'
-            ListHeaderComponent={ () => ( <View style={styles.marginTop} /> )}
-            ListFooterComponent={ () => ( <View style={styles.marginBottom} /> )}
-            renderItem={ ({item}) => renderFlatList(item) }
-          />
+          {
+            serieListReducer === null
+            ? <ActivityIndicator size="large" color="#6ca2f7" />
+            : <FlatList 
+                data={[...serieListReducer, { isLast: true }]}
+                keyExtractor={item => item.id}
+                numColumns='2'
+                ListHeaderComponent={ () => ( <View style={styles.marginTop} /> )}
+                ListFooterComponent={ () => ( <View style={styles.marginBottom} /> )}
+                renderItem={ ({item}) => renderFlatList(item) }
+              />
+          }
         </>
     )
 }
