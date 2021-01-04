@@ -13,7 +13,7 @@ const SerieFormPage = ({
 }) => {
 
     const genderOptions = [
-        {label: 'Ação', value: 'Ação'},
+        {label: 'Ação', value: 'acao'},
         {label: 'Drama', value: 'drama'},
         {label: 'Suspense', value: 'suspense'},
         {label: 'Terror', value: 'terror'},

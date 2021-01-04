@@ -1,10 +1,24 @@
 import React from 'react'
 import { StyleSheet, FlatList, View, Text } from 'react-native'
-import series from '../../series.json';
 import SerieCard from '../components/SerieCard';
 import AddSerieCard from '../components/AddSerieCard';
+import { useSelector, useDispatch } from 'react-redux'
+import { watchSeries } from '../store/actions';
 
 export default function SeriesPage(props) {
+
+    const dispatch = useDispatch();
+    const serieListReducer = useSelector( (state) => { 
+        const series = state.serieListReducer;
+        const keys = Object.keys(series);
+        return keys.map(id => {
+          return {...series[id], id}
+        }) 
+    })
+
+    React.useEffect(() =>{
+      dispatch( watchSeries() );
+    }, []);
 
     const renderFlatList = (item) => {
       if( item.isLast ){
@@ -26,7 +40,7 @@ export default function SeriesPage(props) {
     return (
         <>
           <FlatList 
-            data={[...series, { isLast: true }]}
+            data={[...serieListReducer, { isLast: true }]}
             keyExtractor={item => item.id}
             numColumns='2'
             ListHeaderComponent={ () => ( <View style={styles.marginTop} /> )}
