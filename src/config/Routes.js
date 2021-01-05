@@ -39,7 +39,17 @@ export default function Routes() {
                 <Stack.Screen
                     name="SerieFormPage"
                     component={SerieFormPage}
-                    options={navigation.serieFormPage}
+                    options={({route}) => {
+                        if(route.params && route.params.serieToEdit){
+                            return {
+                                title: route.params.serieToEdit.title
+                            }
+                        }
+
+                        return {
+                            title: 'Nova série'
+                        }
+                    }}
                 />
 
             </Stack.Navigator>
@@ -74,7 +84,5 @@ const navigation = {
 
     serieDetailPage: {},
 
-    serieFormPage: {
-        title:  'Nova série'
-    },
+    serieFormPage: {},
 }

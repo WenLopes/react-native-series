@@ -27,10 +27,17 @@ export const saveSerie = serie => {
     return async (dispatch, getState) => {
         const state = getState();
         const { uid } = state.userReducer.user;
-        await firebase
-            .database()
-            .ref(`/users/${uid}/series`)
-            .push(serie)
+        const db = firebase.database();
+
+        if(serie.id){
+
+            await db.ref(`/users/${uid}/series/${serie.id}`).set(serie)
+
+        } else {
+
+            await db.ref(`/users/${uid}/series`).push(serie)
+
+        }
 
         dispatch( serieSavedSuccess() );
     }

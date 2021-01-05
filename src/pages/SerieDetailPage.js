@@ -27,10 +27,20 @@ export default function SerieDetailPage(props) {
 
                 </View>
 
-                <Button
-                    title="Editar"
-                    onPress={ () => { props.navigation.replace('SerieFormPage',{ serieToEdit: serie}) } }
-                />
+                <View style={styles.button}>
+                    <Button
+                        title="Editar"
+                        onPress={ () => { props.navigation.replace('SerieFormPage',{ serieToEdit: serie}) } }
+                    />
+                </View>
+
+                <View style={styles.button}>
+                    <Button
+                        title="Remover"
+                        buttonStyle={{backgroundColor: 'red'}}
+                        onPress={ () => { console.log('Removido') } }
+                    />
+                </View>
 
             </ScrollView>
         </View>
@@ -59,6 +69,10 @@ const styles = StyleSheet.create({
     avatar: {
         aspectRatio: 1,
         borderRadius: 10
+    },
+
+    button: {
+        margin: 10
     }
 
 });

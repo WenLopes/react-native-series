@@ -6,6 +6,7 @@ import {
 } from '../actions/index'
 
 const initialState =     {
+    id: null,
     title: '',
     gender: 'drama',
     rate: 0,
