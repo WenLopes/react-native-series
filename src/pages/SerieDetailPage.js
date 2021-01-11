@@ -3,9 +3,10 @@ import { StyleSheet, SafeAreaView, ScrollView, Image, View,  } from 'react-nativ
 import Line from '../components/Line'
 import LongLine from '../components/LongLine'
 import { Button } from 'react-native-elements'
+import { connect } from 'react-redux'
+import { deleteSerie } from '../store/actions'
 
-
-export default function SerieDetailPage(props) {
+const SerieDetailPage = (props) => {
     
     const {serie} = props.route.params; 
     
@@ -38,7 +39,12 @@ export default function SerieDetailPage(props) {
                     <Button
                         title="Remover"
                         buttonStyle={{backgroundColor: 'red'}}
-                        onPress={ () => { console.log('Removido') } }
+                        onPress={ async () => { 
+                            const hasDeleted = await props.deleteSerie(serie)
+                            if(hasDeleted){
+                                props.navigation.goBack();
+                            }
+                        }}
                     />
                 </View>
 
@@ -76,3 +82,9 @@ const styles = StyleSheet.create({
     }
 
 });
+
+const mapDispatchToProps = {
+    deleteSerie
+}
+
+export default connect(null, mapDispatchToProps)(SerieDetailPage)
